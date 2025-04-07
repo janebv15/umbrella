@@ -32,13 +32,24 @@ loc = geo.fetch("location")
 
 pp latitude = loc.fetch("lat")
 pp longitude = loc.fetch("lng")
-pp geo
+geo
 
 
-pp resp
+resp
 #Get lat and lon from google
 
 #get weather from pirate AI based on coordinates
-pp pirate_weather = "https://api.pirateweather.net/forecast/#{ENV.fetch("PIRATE_KEY")}/#{latitude},#{longitude}"
+pirate_weather = "https://api.pirateweather.net/forecast/#{ENV.fetch("PIRATE_KEY")}/#{latitude},#{longitude}"
+
+P_resp = HTTP.get(pirate_weather)
+P_raw_response = P_resp.to_s
+
+P_parsed_response = JSON.parse(P_raw_response)
+
+currently_hash = P_parsed_response.fetch("currently")
+
+current_temp = currently_hash.fetch("temperature")
+
+puts "It is currently #{current_temp}°F."
 
 #Display current temperature etc for next hour
